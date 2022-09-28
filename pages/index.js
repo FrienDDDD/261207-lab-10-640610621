@@ -22,14 +22,14 @@ export default function Home() {
     const resp = await axios.get("/api/room");
     setRoomList(resp.data.rooms);
   }
-  
-   async function getMsgs() {
+
+  async function getMsgs() {
     if (!roomId) return;
     const resp = await axios.get("/api/room/" + roomId + "/message");
     const msgs = resp.data.messages;
     processMsgs(msgs);
   }
-  
+
   async function joinRoom(roomId) {
     setRoomId(roomId);
     const resp = await axios.get("/api/room/" + roomId + "/message");
@@ -43,13 +43,14 @@ export default function Home() {
     });
     if (resp.data.ok) await getMsgs();
   }
+
   async function deleteMsg(messageId) {
     const resp = await axios.delete(
       "/api/room/" + roomId + "/message/" + messageId
     );
     if (resp.data.ok) await getMsgs();
   }
-  
+
   const [intId, setIntId] = useState(null);
   useEffect(() => {
     clearInterval(intId);
@@ -84,6 +85,7 @@ export default function Home() {
           ))}
         </ul>
       )}
+
       <hr />
 
       {roomId && (
